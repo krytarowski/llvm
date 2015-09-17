@@ -2213,6 +2213,23 @@ if test -f ${clang_src_root}/README.txt; then
   AC_CONFIG_FILES([tools/clang/${doxy}:${clang_src_root}/${doxy}.in])
 fi
 
+dnl Configure lldb, if present
+if test "${lldb_src_root}" = ""; then
+  lldb_src_root="$srcdir/tools/lldb"
+fi
+if test -f ${lldb_src_root}/INSTALL.txt; then
+  dnl LLDB supports build systems which use the multilib libdir suffix.
+  dnl The autoconf system doesn't support this so stub out that variable.
+  AC_DEFINE_UNQUOTED(CLANG_LIBDIR_SUFFIX,"",
+                     [Multilib suffix for libdir.])
+
+  dnl Use variables to stay under 80 columns.
+  configh="include/lldb/Config/config.h"
+  doxy="docs/doxygen.cfg"
+  AC_CONFIG_HEADERS([tools/lldb/${configh}:${lldb_src_root}/${configh}.in])
+  AC_CONFIG_FILES([tools/lldb/${doxy}:${lldb_src_root}/${doxy}.in])
+fi
+
 dnl OCaml findlib META file
 AC_CONFIG_FILES([bindings/ocaml/llvm/META.llvm])
 
