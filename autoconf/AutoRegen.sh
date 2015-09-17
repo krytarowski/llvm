@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/pkg/bin/bash
 
 die() {
   echo "$@" 1>&2
@@ -14,9 +14,9 @@ clean() {
 ### Periods should be escaped with backslash for use by grep.
 ###
 ### If you update these, please also update docs/GettingStarted.rst
-want_autoconf_version='2\.60'
+want_autoconf_version='2\.69'
 want_autoheader_version=$want_autoconf_version
-want_aclocal_version='1\.9\.6'
+want_aclocal_version='1\.15'
 ### END NOTE #########################################################
 
 outfile=configure
