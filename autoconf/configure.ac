@@ -1810,6 +1810,7 @@ AC_CHECK_HEADERS([sys/mman.h sys/param.h sys/resource.h sys/time.h sys/uio.h])
 AC_CHECK_HEADERS([sys/ioctl.h malloc/malloc.h mach/mach.h])
 AC_CHECK_HEADERS([valgrind/valgrind.h])
 AC_CHECK_HEADERS([fenv.h])
+AC_CHECK_HEADERS([ncurses.h ncurses/ncurses.h])
 AC_CHECK_DECLS([FE_ALL_EXCEPT, FE_INEXACT], [], [], [[#include <fenv.h>]])
 if test "$LLVM_ENABLE_THREADS" -eq 1 && test "$ENABLE_PTHREADS" -eq 1 ; then
   AC_CHECK_HEADERS(pthread.h,
@@ -2211,6 +2212,18 @@ if test -f ${clang_src_root}/README.txt; then
   doxy="docs/doxygen.cfg"
   AC_CONFIG_HEADERS([tools/clang/${configh}:${clang_src_root}/${configh}.in])
   AC_CONFIG_FILES([tools/clang/${doxy}:${clang_src_root}/${doxy}.in])
+fi
+
+dnl Configure lldb, if present
+if test "${lldb_src_root}" = ""; then
+  lldb_src_root="$srcdir/tools/lldb"
+fi
+if test -f ${lldb_src_root}/INSTALL.txt; then
+  dnl Use variables to stay under 80 columns.
+  configh="include/lldb/Config/config.h"
+  doxy="docs/doxygen.cfg"
+  AC_CONFIG_HEADERS([tools/lldb/${configh}:${lldb_src_root}/${configh}.in])
+  AC_CONFIG_FILES([tools/lldb/${doxy}:${lldb_src_root}/${doxy}.in])
 fi
 
 dnl OCaml findlib META file
