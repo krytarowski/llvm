@@ -253,9 +253,8 @@ void llvm::sys::AddSignalHandler(void (*FnPtr)(void *), void *Cookie) {
   RegisterHandlers();
 }
 
-#if defined(HAVE_BACKTRACE) && defined(ENABLE_BACKTRACES)
-
-#if HAVE_LINK_H && (defined(__linux__) || defined(__FreeBSD__) ||              \
+#if defined(HAVE_BACKTRACE) && defined(ENABLE_BACKTRACES) && \
+     HAVE_LINK_H && (defined(__linux__) || defined(__FreeBSD__) ||              \
                     defined(__FreeBSD_kernel__) || defined(__NetBSD__))
 struct DlIteratePhdrData {
   void **StackTrace;
@@ -306,7 +305,6 @@ static bool findModulesAndOffsets(void **StackTrace, int Depth,
   return false;
 }
 #endif
-#endif // defined(HAVE_BACKTRACE) && defined(ENABLE_BACKTRACES)
 
 // PrintStackTrace - In the case of a program crash or fault, print out a stack
 // trace so that the user has an indication of why and where we died.
